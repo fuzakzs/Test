@@ -216,7 +216,7 @@ function Hero() {
               className="font-mono text-xs tracking-[0.3em] text-primary/60 mb-6 flex items-center gap-3"
             >
               <span className="w-8 h-px bg-primary/40" />
-              PORTFOLIO 2024 — AVAILABLE FOR WORK
+              PORTFOLIO 2026 — AVAILABLE FOR WORK
             </motion.div>
 
             <motion.h1
@@ -299,4 +299,541 @@ function Hero() {
   );
 }
 
-// ... (ProjectCard, Work, About, Skills, Contact, Footer, App components continue as shown above)
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Placeholder — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #03040a; --fg: #e8eaf0; --card: #080c18; --muted: #5a6a8a;
+      --border: rgba(0,229,255,0.12); --primary: #00e5ff; --accent: #7c3aff;
+      --font-display: 'Rajdhani', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-body); min-height: 100vh; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+
+    #grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    #grid-bg::before {
+      content: ''; position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(rgba(0,229,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,1) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    #grid-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,255,0.15) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,229,255,0.08) 0%, transparent 60%);
+    }
+    #scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.025;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px);
+    }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; border-bottom: 1px solid var(--border); background: rgba(3,4,10,0.85); backdrop-filter: blur(12px); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.2em; color: var(--primary); text-decoration: none; font-weight: 500; }
+    .nav-logo span { opacity: 0.5; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-cta { color: var(--primary) !important; border: 1px solid rgba(0,229,255,0.4); padding: 6px 16px; display: flex; align-items: center; gap: 6px; }
+    .nav-cta:hover { background: rgba(0,229,255,0.08) !important; }
+    .nav-hamburger { display: none; background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px; }
+    .nav-mobile { display: none; flex-direction: column; border-bottom: 1px solid var(--border); background: rgba(3,4,10,0.95); }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); padding: 12px 24px; border-bottom: 1px solid rgba(0,229,255,0.06); transition: color 0.2s; }
+    .nav-mobile a:hover { color: var(--primary); }
+    @media (max-width: 768px) { .nav-links { display: none; } .nav-hamburger { display: block; } }
+
+    main { position: relative; z-index: 10; }
+
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 56px; position: relative; }
+    .hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; width: 100%; }
+    .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: end; padding-bottom: 80px; }
+    .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em; color: rgba(0,229,255,0.6); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: rgba(0,229,255,0.4); }
+    .hero-title { font-family: var(--font-display); font-weight: 700; line-height: 0.9; letter-spacing: -0.02em; font-size: clamp(4rem, 12vw, 9rem); margin-bottom: 24px; }
+    .hero-title .line2 { color: var(--primary); }
+    .hero-subtitle { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 40px; height: 24px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 12px; padding: 12px 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; background: var(--primary); color: var(--bg); text-decoration: none; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 12px; padding: 12px 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--primary); border: 1px solid rgba(0,229,255,0.3); text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+    .btn-outline:hover { border-color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.05); }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-card { border: 1px solid var(--border); padding: 16px; background: rgba(8,12,24,0.4); min-width: 100px; text-align: right; }
+    .stat-number { font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-family: var(--font-mono); font-size: 10px; line-height: 1.4; color: var(--muted); letter-spacing: 0.12em; white-space: pre-line; }
+    .hero-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .hero-scroll span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+    .hero-scroll svg { color: var(--primary); animation: bounce 2s infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+    .hero-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent); }
+    .cursor { animation: blink 1s step-end infinite; color: var(--primary); }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .glitch { display: inline-block; }
+    .glitch.glitching { animation: glitch 0.15s steps(2) forwards; }
+    @keyframes glitch {
+      0%   { clip-path: inset(20% 0 60% 0); transform: translate(-4px,0); color: #7c3aff; }
+      25%  { clip-path: inset(60% 0 10% 0); transform: translate(4px,0);  color: #00e5ff; }
+      50%  { clip-path: inset(40% 0 40% 0); transform: translate(-2px,1px); color: #ff3366; }
+      75%  { clip-path: inset(10% 0 70% 0); transform: translate(2px,-1px); color: #7c3aff; }
+      100% { clip-path: inset(0); transform: translate(0); color: inherit; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    section { position: relative; }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .section-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em; color: rgba(0,229,255,0.6); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+    .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: rgba(0,229,255,0.4); }
+    .section-title { font-family: var(--font-display); font-weight: 700; line-height: 0.95; font-size: clamp(2.5rem, 6vw, 5rem); }
+
+    #work { padding: 128px 0; }
+    .work-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; }
+    .work-all { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .work-all:hover { color: var(--primary); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .project-card { border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: border-color 0.5s; position: relative; }
+    .project-card:hover { border-color: rgba(0,229,255,0.3); }
+    .project-img-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #0d1226; }
+    .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: transform 0.7s, opacity 0.5s; }
+    .project-card:hover .project-img-wrap img { transform: scale(1.05); opacity: 0.8; }
+    .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #080c18 0%, rgba(8,12,24,0.4) 50%, transparent 100%); }
+    .project-id { position: absolute; top: 16px; left: 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+    .project-year { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+    .project-body { padding: 24px; }
+    .project-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; margin-bottom: 8px; }
+    .project-name { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--fg); margin-bottom: 12px; line-height: 1.1; }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; padding: 4px 8px; border: 1px solid; }
+    .project-glow { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; opacity: 0; transition: opacity 0.3s; }
+    .project-card:hover .project-glow { opacity: 1; }
+
+    #about { padding: 128px 0; border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: center; }
+    .about-photo-wrap { position: relative; aspect-ratio: 3/4; max-width: 300px; border: 1px solid var(--border); overflow: hidden; }
+    .about-photo-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+    .about-photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(3,4,10,0.8) 100%); }
+    .about-photo-scanlines { position: absolute; inset: 0; opacity: 0.2; background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,229,255,0.15) 3px, rgba(0,229,255,0.15) 4px); }
+    .about-photo-topline { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent); }
+    .about-photo-caption { position: absolute; bottom: 16px; left: 16px; right: 16px; }
+    .about-photo-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--fg); }
+    .about-photo-role { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--primary); }
+    .about-title { margin-bottom: 32px; }
+    .about-body p { line-height: 1.75; margin-bottom: 24px; }
+    .about-body p:first-child { font-size: 17px; color: rgba(232,234,240,0.8); font-weight: 300; }
+    .about-body p:last-of-type { font-size: 14px; color: var(--muted); }
+    .about-icons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .about-icon-card { border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; transition: border-color 0.2s; }
+    .about-icon-card:hover { border-color: rgba(0,229,255,0.3); }
+    .about-icon-card svg { color: var(--primary); }
+    .about-icon-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+    .about-socials { display: flex; gap: 24px; }
+    .about-socials a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+    .about-socials a:hover { color: var(--primary); }
+
+    #skills { padding: 128px 0; border-top: 1px solid var(--border); }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; }
+    .skills-intro p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 32px; }
+    .skill-bars { display: flex; flex-direction: column; gap: 24px; }
+    .skill-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .skill-meta-left { display: flex; align-items: center; gap: 12px; }
+    .skill-badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; padding: 2px 6px; border: 1px solid; }
+    .skill-name { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--fg); }
+    .skill-pct { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+    .skill-track { height: 1px; background: var(--border); position: relative; overflow: hidden; }
+    .skill-fill { height: 100%; position: absolute; left: 0; top: 0; width: 0; transition: width 1.2s ease; }
+    .caps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .cap-card { border: 1px solid var(--border); padding: 20px; transition: border-color 0.2s; }
+    .cap-card:hover { border-color: rgba(0,229,255,0.25); }
+    .cap-icon { color: var(--primary); margin-bottom: 12px; }
+    .cap-title { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 4px; }
+    .cap-desc { font-size: 11px; color: var(--muted); }
+
+    #contact { padding: 128px 0; border-top: 1px solid var(--border); }
+    .contact-inner { max-width: 640px; }
+    .contact-title { font-family: var(--font-display); font-weight: 700; line-height: 0.95; font-size: clamp(2.5rem, 8vw, 7rem); margin-bottom: 24px; }
+    .contact-title span { color: var(--primary); }
+    .contact-body { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 48px; }
+    .contact-link { display: flex; align-items: center; gap: 10px; padding: 14px 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-decoration: none; transition: all 0.2s; }
+    .contact-link-primary { background: var(--primary); color: var(--bg); }
+    .contact-link-primary:hover { opacity: 0.9; }
+    .contact-link-secondary { border: 1px solid var(--border); color: var(--fg); }
+    .contact-link-secondary:hover { border-color: rgba(0,229,255,0.4); background: rgba(0,229,255,0.05); }
+    .contact-location { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+
+    footer { border-top: 1px solid var(--border); padding: 32px 0; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-inner span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+    .footer-inner span i { opacity: 0.5; font-style: normal; }
+
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-stats { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+      .caps-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .work-all { display: none; }
+      .contact-links { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="grid-bg"></div>
+<div id="scanlines"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo"><span>// </span>USER_PLACEHOLDER</a>
+    <ul class="nav-links">
+      <li><a href="#work" data-section="work">work</a></li>
+      <li><a href="#about" data-section="about">about</a></li>
+      <li><a href="#skills" data-section="skills">skills</a></li>
+      <li><a href="#contact" data-section="contact">contact</a></li>
+      <li>
+        <a href="#contact" class="nav-cta">HIRE ME
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <svg id="icon-menu" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icon-x" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#work" onclick="closeMenu()">work</a>
+    <a href="#about" onclick="closeMenu()">about</a>
+    <a href="#skills" onclick="closeMenu()">skills</a>
+    <a href="#contact" onclick="closeMenu()">contact</a>
+  </div>
+</nav>
+
+<main>
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">PORTFOLIO 2026 — AVAILABLE FOR WORK</div>
+          <h1 class="hero-title">
+            <span class="glitch" id="glitch-text">USER</span><br>
+            <span class="line2">PLACEHOLDER</span>
+          </h1>
+          <div class="hero-subtitle" id="typewriter"><span class="cursor">|</span></div>
+          <div class="hero-ctas">
+            <a href="#work" class="btn-primary">VIEW WORK
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+            <a href="#contact" class="btn-outline">GET IN TOUCH</a>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card"><div class="stat-number">47</div><div class="stat-label">Projects&#10;Delivered</div></div>
+          <div class="stat-card"><div class="stat-number">6+</div><div class="stat-label">Years&#10;Experience</div></div>
+          <div class="stat-card"><div class="stat-number">23</div><div class="stat-label">Clients&#10;Worldwide</div></div>
+          <div class="stat-card"><div class="stat-number">99%</div><div class="stat-label">Client&#10;Satisfaction</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="hero-line"></div>
+  </section>
+
+  <section id="work">
+    <div class="section-inner">
+      <div class="work-header reveal">
+        <div>
+          <div class="section-eyebrow">SELECTED WORK</div>
+          <h2 class="section-title">PROJECTS</h2>
+        </div>
+        <a href="#contact" class="work-all">ALL PROJECTS <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-img-wrap">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop&auto=format" alt="Neural Interface OS" loading="lazy"/>
+            <div class="project-overlay"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,255,0.13) 0%,transparent 60%)"></div>
+            <div class="project-id">01</div><div class="project-year">2026</div>
+          </div>
+          <div class="project-body">
+            <div class="project-cat" style="color:#00e5ff">UI/UX DESIGN</div>
+            <div class="project-name">Neural Interface OS</div>
+            <p class="project-desc">Operating system interface designed for brain-computer interaction. Spatial computing paradigms translated to 2D screens.</p>
+            <div class="project-tags">
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">Spatial UI</span>
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">Motion</span>
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">Systems Design</span>
+            </div>
+          </div>
+          <div class="project-glow" style="background:linear-gradient(90deg,transparent,rgba(0,229,255,0.6),transparent)"></div>
+        </div>
+
+        <div class="project-card reveal" style="transition-delay:0.1s">
+          <div class="project-img-wrap">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=500&fit=crop&auto=format" alt="Quantum Dashboard" loading="lazy"/>
+            <div class="project-overlay"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,255,0.13) 0%,transparent 60%)"></div>
+            <div class="project-id">02</div><div class="project-year">2024</div>
+          </div>
+          <div class="project-body">
+            <div class="project-cat" style="color:#7c3aff">FRONTEND ENGINEERING</div>
+            <div class="project-name">Quantum Dashboard</div>
+            <p class="project-desc">Real-time data visualization for quantum computing metrics. 60fps rendering of 10M+ data points with WebGL pipelines.</p>
+            <div class="project-tags">
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">WebGL</span>
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">React</span>
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">D3.js</span>
+            </div>
+          </div>
+          <div class="project-glow" style="background:linear-gradient(90deg,transparent,rgba(124,58,255,0.6),transparent)"></div>
+        </div>
+
+        <div class="project-card reveal" style="transition-delay:0.15s">
+          <div class="project-img-wrap">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop&auto=format" alt="Hyperion Protocol" loading="lazy"/>
+            <div class="project-overlay"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,255,0.13) 0%,transparent 60%)"></div>
+            <div class="project-id">03</div><div class="project-year">2023</div>
+          </div>
+          <div class="project-body">
+            <div class="project-cat" style="color:#00e5ff">FULL STACK</div>
+            <div class="project-name">Hyperion Protocol</div>
+            <p class="project-desc">Decentralized mesh network management console. End-to-end encrypted communication infrastructure for distributed teams.</p>
+            <div class="project-tags">
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">Node.js</span>
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">WebSockets</span>
+              <span class="tag" style="border-color:rgba(0,229,255,0.3);color:#00e5ff;background:rgba(0,229,255,0.05)">Crypto</span>
+            </div>
+          </div>
+          <div class="project-glow" style="background:linear-gradient(90deg,transparent,rgba(0,229,255,0.6),transparent)"></div>
+        </div>
+
+        <div class="project-card reveal" style="transition-delay:0.2s">
+          <div class="project-img-wrap">
+            <img src="https://images.unsplash.com/photo-1617042375876-a13e36732a04?w=800&h=500&fit=crop&auto=format" alt="Axiom Design System" loading="lazy"/>
+            <div class="project-overlay"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,255,0.13) 0%,transparent 60%)"></div>
+            <div class="project-id">04</div><div class="project-year">2023</div>
+          </div>
+          <div class="project-body">
+            <div class="project-cat" style="color:#7c3aff">DESIGN SYSTEMS</div>
+            <div class="project-name">Axiom Design System</div>
+            <p class="project-desc">Component library and design token architecture for a Series C fintech. 140+ components, full dark/light parity.</p>
+            <div class="project-tags">
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">Figma</span>
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">Storybook</span>
+              <span class="tag" style="border-color:rgba(124,58,255,0.3);color:#7c3aff;background:rgba(124,58,255,0.05)">Tokens</span>
+            </div>
+          </div>
+          <div class="project-glow" style="background:linear-gradient(90deg,transparent,rgba(124,58,255,0.6),transparent)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="section-eyebrow">ABOUT</div>
+          <h2 class="section-title about-title">ABOUT ME</h2>
+          <div class="about-photo-wrap">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='660'%3E%3Crect width='500' height='660' fill='%23374151'/%3E%3Ccircle cx='250' cy='220' r='90' fill='%234B5563'/%3E%3Cellipse cx='250' cy='500' rx='160' ry='130' fill='%234B5563'/%3E%3C/svg%3E" alt="User Placeholder"/>
+            <div class="about-photo-overlay"></div>
+            <div class="about-photo-scanlines"></div>
+            <div class="about-photo-topline"></div>
+            <div class="about-photo-caption">
+              <div class="about-photo-name">User Placeholder</div>
+              <div class="about-photo-role">INTERFACE ARCHITECT</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-body reveal" style="transition-delay:0.15s">
+          <p>I design and engineer digital experiences that live at the intersection of systems thinking and aesthetic precision. Six years building products that ship — from zero-to-one MVPs to scaled platforms serving millions.</p>
+          <p>My practice spans the full spectrum: defining interaction models at the whiteboard, architecting component systems in Figma, and shipping production React with the engineers. I believe the best interfaces feel inevitable — you can't imagine them being any other way.</p>
+          <div class="about-icons">
+            <div class="about-icon-card">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span class="about-icon-label">ENGINEERING</span>
+            </div>
+            <div class="about-icon-card">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg>
+              <span class="about-icon-label">SYSTEMS</span>
+            </div>
+            <div class="about-icon-card">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span class="about-icon-label">WEB</span>
+            </div>
+          </div>
+          <div class="about-socials">
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+            <a href="mailto:user@placeholder.dev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-inner">
+      <div class="skills-grid">
+        <div class="skills-intro reveal">
+          <div class="section-eyebrow">CAPABILITIES</div>
+          <h2 class="section-title">SKILLS</h2>
+          <p>Fluent across the design-to-production pipeline. I work where the gap between design and engineering is smallest — shipping interfaces that are both considered and correct.</p>
+        </div>
+        <div class="skill-bars reveal" style="transition-delay:0.1s">
+          <div class="skill-row" data-level="96">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#00e5ff;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.05)">DESIGN</span><span class="skill-name">Interface Design</span></div><span class="skill-pct">96%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#00e5ff,rgba(0,229,255,0.5))"></div></div>
+          </div>
+          <div class="skill-row" data-level="94">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#7c3aff;border-color:rgba(124,58,255,0.3);background:rgba(124,58,255,0.05)">ENG</span><span class="skill-name">React / TypeScript</span></div><span class="skill-pct">94%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#7c3aff,rgba(124,58,255,0.5))"></div></div>
+          </div>
+          <div class="skill-row" data-level="89">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#00e5ff;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.05)">DESIGN</span><span class="skill-name">Motion &amp; Animation</span></div><span class="skill-pct">89%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#00e5ff,rgba(0,229,255,0.5))"></div></div>
+          </div>
+          <div class="skill-row" data-level="78">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#7c3aff;border-color:rgba(124,58,255,0.3);background:rgba(124,58,255,0.05)">ENG</span><span class="skill-name">WebGL / Three.js</span></div><span class="skill-pct">78%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#7c3aff,rgba(124,58,255,0.5))"></div></div>
+          </div>
+          <div class="skill-row" data-level="92">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#00e5ff;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.05)">DESIGN</span><span class="skill-name">Design Systems</span></div><span class="skill-pct">92%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#00e5ff,rgba(0,229,255,0.5))"></div></div>
+          </div>
+          <div class="skill-row" data-level="85">
+            <div class="skill-meta"><div class="skill-meta-left"><span class="skill-badge" style="color:#7c3aff;border-color:rgba(124,58,255,0.3);background:rgba(124,58,255,0.05)">ENG</span><span class="skill-name">Node.js / APIs</span></div><span class="skill-pct">85%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="background:linear-gradient(90deg,#7c3aff,rgba(124,58,255,0.5))"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caps-grid">
+        <div class="cap-card reveal"><div class="cap-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div><div class="cap-title">CLI Tooling</div><div class="cap-desc">Bash, Node.js scripts, automation</div></div>
+        <div class="cap-card reveal" style="transition-delay:0.05s"><div class="cap-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="14" x2="22" y2="14"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="14" x2="4" y2="14"/></svg></div><div class="cap-title">Performance</div><div class="cap-desc">Core Web Vitals, Lighthouse 100</div></div>
+        <div class="cap-card reveal" style="transition-delay:0.1s"><div class="cap-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="cap-title">Architecture</div><div class="cap-desc">Monorepos, micro-frontends</div></div>
+        <div class="cap-card reveal" style="transition-delay:0.15s"><div class="cap-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="7" height="7"/><rect x="15" y="3" width="7" height="7"/><rect x="2" y="14" width="7" height="7"/><rect x="15" y="14" width="7" height="7"/></svg></div><div class="cap-title">Tokens</div><div class="cap-desc">Design-to-code token pipelines</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-inner reveal">
+        <div class="section-eyebrow">CONTACT</div>
+        <h2 class="contact-title">LET'S BUILD<br><span>SOMETHING.</span></h2>
+        <p class="contact-body">Currently taking on new projects for Q1 2026. If you're building something that demands the intersection of design excellence and engineering rigor — let's talk.</p>
+        <div class="contact-links">
+          <a href="mailto:user@placeholder.dev" class="contact-link contact-link-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            user@placeholder.dev
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="#" class="contact-link contact-link-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="#" class="contact-link contact-link-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+        <div class="contact-location">BASED IN ????, CA · AVAILABLE WORLDWIDE</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span><i>// </i>USER_PLACEHOLDER · PORTFOLIO 2024</span>
+    <span>DESIGNED &amp; BUILT WITH PRECISION</span>
+  </div>
+</footer>
+
+<script>
+  const tw = document.getElementById('typewriter');
+  const text = 'INTERFACE ARCHITECT  ·  CREATIVE ENGINEER';
+  let i = 0;
+  function type() {
+    if (i <= text.length) {
+      tw.innerHTML = text.slice(0, i) + '<span class="cursor">|</span>';
+      i++;
+      setTimeout(type, 40);
+    }
+  }
+  setTimeout(type, 800);
+
+  const glitchEl = document.getElementById('glitch-text');
+  function triggerGlitch() {
+    glitchEl.classList.add('glitching');
+    setTimeout(() => glitchEl.classList.remove('glitching'), 150);
+    setTimeout(triggerGlitch, 4000 + Math.random() * 3000);
+  }
+  setTimeout(triggerGlitch, 2000);
+
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '-60px' });
+  reveals.forEach(el => revealObs.observe(el));
+
+  document.querySelectorAll('.skill-row').forEach(row => {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        row.querySelector('.skill-fill').style.width = row.dataset.level + '%';
+      }
+    }, { threshold: 0.3 }).observe(row);
+  });
+
+  document.querySelectorAll('section[id]').forEach(sec => {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('[data-section]').forEach(a => {
+          a.classList.toggle('active', a.dataset.section === sec.id);
+        });
+      }
+    }, { threshold: 0.3 }).observe(sec);
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('nav-mobile');
+  hamburger.addEventListener('click', () => {
+    const open = navMobile.classList.toggle('open');
+    document.getElementById('icon-menu').style.display = open ? 'none' : 'block';
+    document.getElementById('icon-x').style.display = open ? 'block' : 'none';
+  });
+  function closeMenu() {
+    navMobile.classList.remove('open');
+    document.getElementById('icon-menu').style.display = 'block';
+    document.getElementById('icon-x').style.display = 'none';
+  }
+</script>
+</body>
+</html>
