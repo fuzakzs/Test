@@ -1,0 +1,302 @@
+import { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "motion/react";
+import { ArrowUpRight, Github, Linkedin, Mail, Terminal, Cpu, Globe, Code2, Layers, ChevronDown, ExternalLink, Menu, X } from "lucide-react";
+
+const PROJECTS = [
+  {
+    id: "01",
+    title: "Neural Interface OS",
+    category: "UI/UX Design",
+    year: "2024",
+    description: "Operating system interface designed for brain-computer interaction. Spatial computing paradigms translated to 2D screens.",
+    tags: ["Spatial UI", "Motion", "Systems Design"],
+    color: "#00e5ff",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop&auto=format",
+  },
+  {
+    id: "02",
+    title: "Quantum Dashboard",
+    category: "Frontend Engineering",
+    year: "2024",
+    description: "Real-time data visualization for quantum computing metrics. 60fps rendering of 10M+ data points with WebGL pipelines.",
+    tags: ["WebGL", "React", "D3.js"],
+    color: "#7c3aff",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=500&fit=crop&auto=format",
+  },
+  {
+    id: "03",
+    title: "Hyperion Protocol",
+    category: "Full Stack",
+    year: "2023",
+    description: "Decentralized mesh network management console. End-to-end encrypted communication infrastructure for distributed teams.",
+    tags: ["Node.js", "WebSockets", "Crypto"],
+    color: "#00e5ff",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop&auto=format",
+  },
+  {
+    id: "04",
+    title: "Axiom Design System",
+    category: "Design Systems",
+    year: "2023",
+    description: "Component library and design token architecture for a Series C fintech. 140+ components, full dark/light parity.",
+    tags: ["Figma", "Storybook", "Tokens"],
+    color: "#7c3aff",
+    image: "https://images.unsplash.com/photo-1617042375876-a13e36732a04?w=800&h=500&fit=crop&auto=format",
+  },
+];
+
+const SKILLS = [
+  { name: "Interface Design", level: 96, category: "Design" },
+  { name: "React / TypeScript", level: 94, category: "Engineering" },
+  { name: "Motion & Animation", level: 89, category: "Design" },
+  { name: "WebGL / Three.js", level: 78, category: "Engineering" },
+  { name: "Design Systems", level: 92, category: "Design" },
+  { name: "Node.js / APIs", level: 85, category: "Engineering" },
+];
+
+function GridBackground() {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,229,255,1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,229,255,1) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,255,0.15) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: "radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,229,255,0.08) 0%, transparent 60%)",
+        }}
+      />
+    </div>
+  );
+}
+
+function GlitchText({ text, className }: { text: string; className?: string }) {
+  const [glitching, setGlitching] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGlitching(true);
+      setTimeout(() => setGlitching(false), 150);
+    }, 4000 + Math.random() * 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span
+      className={`relative inline-block ${className || ""}`}
+      style={{
+        animation: glitching ? "glitch 0.15s steps(2) forwards" : undefined,
+      }}
+    >
+      {text}
+      <style>{`
+        @keyframes glitch {
+          0% { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 0); color: #7c3aff; }
+          25% { clip-path: inset(60% 0 10% 0); transform: translate(4px, 0); color: #00e5ff; }
+          50% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 1px); color: #ff3366; }
+          75% { clip-path: inset(10% 0 70% 0); transform: translate(2px, -1px); color: #7c3aff; }
+          100% { clip-path: inset(0); transform: translate(0); color: inherit; }
+        }
+      `}</style>
+    </span>
+  );
+}
+
+function ScanLine() {
+  return (
+    <div
+      className="fixed inset-0 pointer-events-none z-50 opacity-[0.025]"
+      style={{
+        backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)",
+      }}
+    />
+  );
+}
+
+function Nav({ activeSection }: { activeSection: string }) {
+  const [open, setOpen] = useState(false);
+  const links = ["work", "about", "skills", "contact"];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-40">
+      <div
+        className="border-b border-border"
+        style={{ background: "rgba(3,4,10,0.85)", backdropFilter: "blur(12px)" }}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+          <a href="#hero" className="font-mono text-sm tracking-[0.2em] text-primary font-medium">
+            <span className="opacity-50">{"// "}</span>USER_PLACEHOLDER
+          </a>
+
+          <div className="hidden md:flex items-center gap-8">
+            {links.map((link) => (
+              <a
+                key={link}
+                href={`#${link}`}
+                className="font-mono text-xs tracking-[0.15em] uppercase transition-colors duration-200"
+                style={{
+                  color: activeSection === link ? "#00e5ff" : "#5a6a8a",
+                }}
+              >
+                {link}
+              </a>
+            ))}
+            <a
+              href="mailto:alex@nova.dev"
+              className="flex items-center gap-2 px-4 py-1.5 border border-primary/40 font-mono text-xs tracking-[0.12em] text-primary hover:bg-primary/10 transition-colors"
+            >
+              HIRE ME <ArrowUpRight size={12} />
+            </a>
+          </div>
+
+          <button
+            className="md:hidden text-muted-foreground hover:text-primary transition-colors"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div
+          className="md:hidden border-b border-border"
+          style={{ background: "rgba(3,4,10,0.95)", backdropFilter: "blur(12px)" }}
+        >
+          {links.map((link) => (
+            <a
+              key={link}
+              href={`#${link}`}
+              onClick={() => setOpen(false)}
+              className="block px-6 py-3 font-mono text-xs tracking-[0.15em] uppercase border-b border-border/30"
+              style={{ color: activeSection === link ? "#00e5ff" : "#5a6a8a" }}
+            >
+              {link}
+            </a>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
+}
+
+function Hero() {
+  const [typedIndex, setTypedIndex] = useState(0);
+  const subtitle = "INTERFACE ARCHITECT  ·  CREATIVE ENGINEER";
+
+  useEffect(() => {
+    if (typedIndex < subtitle.length) {
+      const t = setTimeout(() => setTypedIndex(typedIndex + 1), 40);
+      return () => clearTimeout(t);
+    }
+  }, [typedIndex, subtitle.length]);
+
+  return (
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-14">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-end pb-20">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="font-mono text-xs tracking-[0.3em] text-primary/60 mb-6 flex items-center gap-3"
+            >
+              <span className="w-8 h-px bg-primary/40" />
+              PORTFOLIO 2024 — AVAILABLE FOR WORK
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="font-['Rajdhani'] font-700 leading-[0.9] tracking-[-0.02em] mb-6"
+              style={{ fontSize: "clamp(4rem, 12vw, 9rem)", fontWeight: 700 }}
+            >
+              <GlitchText text="USER" className="text-foreground" />
+              <br />
+              <span style={{ color: "#00e5ff", WebkitTextStroke: "0px" }}>PLACEHOLDER</span>
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0 }}
+              className="font-mono text-sm tracking-[0.2em] text-muted-foreground mb-10 h-6"
+            >
+              {subtitle.slice(0, typedIndex)}
+              <span className="animate-pulse text-primary">|</span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-wrap gap-4"
+            >
+              <a
+                href="#work"
+                className="group flex items-center gap-3 px-6 py-3 font-mono text-xs tracking-[0.15em] text-background bg-primary hover:bg-primary/90 transition-all"
+              >
+                VIEW WORK
+                <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              <a
+                href="#contact"
+                className="flex items-center gap-3 px-6 py-3 font-mono text-xs tracking-[0.15em] text-primary border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-all"
+              >
+                GET IN TOUCH
+              </a>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="hidden lg:grid grid-cols-2 gap-3 text-right"
+          >
+            {[
+              { n: "47", label: "Projects\nDelivered" },
+              { n: "6+", label: "Years\nExperience" },
+              { n: "23", label: "Clients\nWorldwide" },
+              { n: "99", label: "Client\nSatisfaction" },
+            ].map(({ n, label }) => (
+              <div key={n} className="border border-border p-4 bg-card/40 min-w-[100px]">
+                <div className="font-['Rajdhani'] text-3xl font-bold text-primary leading-none mb-1">{n}</div>
+                <div className="font-mono text-[10px] leading-tight text-muted-foreground tracking-[0.12em] whitespace-pre-line">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground">SCROLL</span>
+        <ChevronDown size={14} className="text-primary animate-bounce" />
+      </div>
+
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)" }}
+      />
+    </section>
+  );
+}
+
+// ... (ProjectCard, Work, About, Skills, Contact, Footer, App components continue as shown above)
